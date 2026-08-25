@@ -1,0 +1,24 @@
+{
+  "id": "topwork-8",
+  "goal": "What was the last message that you recieved?",
+  "website": {
+    "id": "topwork",
+    "name": "TopWork",
+    "similarTo": "Upwork",
+    "previewImage": "/websitePreviews/topwork_preview.jpg",
+    "url": "https://evals-topwork.vercel.app"
+  },
+  "difficulty": "medium",
+  "challengeType": "action",
+  "possible": true,
+  "evals": [
+    {
+      "type": "llm_boolean",
+      "expected_value": true,
+      "rubric": "Does the answer state that the last message received was 'Hey, how are you?' (sent by Jane Doe, 04/01/23)? Naming the sender or date is not required, but a different message content or a different sender is incorrect."
+    }
+  ],
+  "points": 1,
+  "config": {},
+  "version": "v1"
+}

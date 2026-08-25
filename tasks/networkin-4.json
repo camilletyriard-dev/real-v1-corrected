@@ -1,0 +1,25 @@
+{
+  "id": "networkin-4",
+  "goal": "List the top 5 most recently shared posts on the homepage.",
+  "website": {
+    "id": "networkin",
+    "name": "Networkin",
+    "similarTo": "LinkedIn",
+    "previewImage": "/websitePreviews/networkin_preview.jpg",
+    "url": "https://evals-networkin.vercel.app"
+  },
+  "difficulty": "medium",
+  "challengeType": "retrieval",
+  "possible": true,
+  "evals": [
+    {
+      "possible": true,
+      "type": "llm_boolean",
+      "expected_value": true,
+      "rubric": "Does the answer contain a list of the 5 most recent posts from the homepage feed: Alexa Richardson ('Exploring the new features in Next.js 14!'), Jane Doe ('Check out our latest product demo!'), John Smith ('Loving the new design trends of 2024!'), Michael Brown ('Analyzing the latest data trends in AI.'), Ekaterina Tankova ('Excited to announce our new funding round!')? Answers naming posts outside this set, or naming Sarah Brown's or Daniel Rodriguez's posts, are incorrect."
+    }
+  ],
+  "points": 1,
+  "config": {},
+  "version": "v1"
+}

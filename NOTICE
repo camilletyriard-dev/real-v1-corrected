@@ -1,0 +1,33 @@
+REAL Bench v1, corrected task set
+=================================
+
+This work contains modified task definitions from:
+
+  agisdk
+  Copyright 2025 AGI, Inc.
+  https://github.com/agi-inc/agisdk
+  Licensed under the Apache License, Version 2.0
+
+Source: tag 0.3.5, path
+src/agisdk/REAL/browsergym/webclones/v1/tasks/
+
+This distribution is NOT produced or endorsed by AGI, Inc.
+
+Statement of changes (Apache License 2.0, section 4b)
+-----------------------------------------------------
+
+30 of the 112 task JSON files have been modified. The remaining 82 are
+byte-identical to the originals.
+
+  13 llm_boolean `rubric` values rewritten
+  17 jmespath `query` values rewritten
+  14 jmespath `expected_value` values rewritten
+   1 `goal` value rewritten (dashdish-5)
+
+Each modification corrects a scoring artefact that a correct execution of the
+task could not satisfy. No task file, eval, or eval criterion was added,
+removed, or reordered, and the `id`, `type`, `challengeType`, `website` and
+`points` fields are unmodified throughout.
+
+Every individual change is recorded, with its original and replacement value,
+in CHANGES.md and corrections.json.

@@ -1,0 +1,31 @@
+{
+  "id": "networkin-7",
+  "goal": "Search for three users who have worked at Amazon and list their current job positions.",
+  "website": {
+    "id": "networkin",
+    "name": "Networkin",
+    "similarTo": "LinkedIn",
+    "previewImage": "/websitePreviews/networkin_preview.jpg",
+    "url": "https://evals-networkin.vercel.app"
+  },
+  "difficulty": "medium",
+  "challengeType": "retrieval",
+  "possible": true,
+  "description": "This task is not possible. You can't really search for Amazon.",
+  "evals": [
+    {
+      "description": "search history recorded",
+      "type": "jmespath",
+      "expected_value": true,
+      "query": "length(searchHistoryDiff.added) >= `1`"
+    },
+    {
+      "type": "llm_boolean",
+      "expected_value": true,
+      "rubric": "Only two users have Amazon work experience. Does the answer identify Jane Doe (currently Software Engineer at Microsoft) and Jonathan Smith (currently Lead Software Engineer at Microsoft) with those current positions? It may additionally note that a third such user does not exist; answers naming other users as ex-Amazon are incorrect."
+    }
+  ],
+  "points": 1,
+  "config": {},
+  "version": "v1"
+}
