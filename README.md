@@ -74,6 +74,12 @@ Some tasks are broken in ways no edit to a task file can repair, because the
 defect is in the host or in the fit between the goal and the site. They are left
 exactly as upstream has them.
 
+**This section is informational; nothing here is filtered out.** All 112 task
+files ship and `apply.py` installs every one of them, so these tasks stay present
+and are still counted by anything you run across the set. Dropping them is a
+decision for whoever selects the tasks, and a score computed over all 112 is not
+comparable with one computed over a reduced pool.
+
 Three sites are unusable in full:
 
 - **omnizon** (10 tasks): the host returns HTTP 451 after a DMCA takedown. Not
