@@ -70,25 +70,44 @@ The rubric should read "6 events on the 'Personal' calendar".
 
 ## Known broken, not corrected
 
-Some tasks cannot be repaired by editing a task file, and are left exactly as
-upstream has them:
+Some tasks are broken in ways no edit to a task file can repair, because the
+defect is in the host or in the fit between the goal and the site. They are left
+exactly as upstream has them.
+
+Three sites are unusable in full:
 
 - **omnizon** (10 tasks): the host returns HTTP 451 after a DMCA takedown. Not
   reachable, so not runnable.
-- **opendining-2, -9, -10**: restaurant detail pages render a permanent skeleton
-  when reached by in-app navigation, which is the only route an agent has. The
-  content the rubric asks for never appears. Other opendining tasks are fine.
+- **opendining** (10 tasks): restaurant detail pages never render their content
+  when reached by in-app navigation, which is the only route an agent has. There
+  is nothing on those pages to read or act on, so the site is dropped in full
+  rather than task by task.
+- **fly-unified** (14 tasks): the goals and the site do not match. Several ask
+  for a flight at a departure time no flight has, or comes near, so there is no
+  correct execution for the eval to score; the site's price categories are also
+  jumbled across its filters. Repairing these would mean rewriting the tasks
+  rather than correcting them.
+
+  A timezone question exists alongside this and is easy to mistake for the cause:
+  the evals look as though they were authored in a US Pacific browser while the
+  site seeds data in the local timezone, and several goals omit the year.
+  Pinning the browser to `America/Los_Angeles` is worth trying, but it is not
+  established that this is what fails; gocalendar stores dates under a fixed
+  offset of the same kind and renders identically under Pacific, London and
+  Brussels browsers.
+
+Two further tasks are individually broken:
+
 - **topwork-5, topwork-9**: the evals query a state schema the site does not use,
   and the goal gives no way to derive the one it does. An override could only
   guess.
-- **topwork-8**: the whole Messages route returns the site's in-app 404 under the
-  harness's state seeding, though it loads fine in an unseeded browser. Its
-  rubric is corrected here anyway, since the defect is in the host rather than
-  the task file.
-- **fly-unified** (14 tasks): evals were authored in a US Pacific browser against
-  data seeded in the local timezone, and several goals omit the year. Results
-  depend on where and when you run them. Pinning the browser timezone to
-  `America/Los_Angeles` recovers most of these.
+- **topwork-8**: the whole Messages route returns the site's in-app 404 under
+  harness state seeding, though it loads fine in an unseeded browser.
+
+`opendining-1` and `topwork-8` appear on this list and are nonetheless corrected
+here. Their task files carry a defective rubric on top of a broken host, and the
+two are independent: if the host is ever fixed, the corrected rubric is the one
+that should grade it.
 
 ## License
 
