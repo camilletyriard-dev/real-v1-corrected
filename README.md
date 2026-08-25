@@ -88,26 +88,34 @@ Three sites are unusable in full:
   jumbled across its filters. Repairing these would mean rewriting the tasks
   rather than correcting them.
 
-  A timezone question exists alongside this and is easy to mistake for the cause:
-  the evals look as though they were authored in a US Pacific browser while the
-  site seeds data in the local timezone, and several goals omit the year.
-  Pinning the browser to `America/Los_Angeles` is worth trying, but it is not
-  established that this is what fails; gocalendar stores dates under a fixed
-  offset of the same kind and renders identically under Pacific, London and
-  Brussels browsers.
+  A timezone question sits alongside this: the evals look as though they were
+  authored in a US Pacific browser while the site seeds data in the local
+  timezone, and several goals omit the year. Pinning the browser to
+  `America/Los_Angeles` may genuinely help with those, and is worth trying. It
+  does not, however, reach the mismatch above. A departure time the site never
+  offers is still absent whatever timezone the browser reports, and a jumbled
+  price filter still filters wrongly. Treat the pin as a partial mitigation
+  rather than a fix for this site.
 
-Two further tasks are individually broken:
+Three further tasks are individually broken, all on topwork:
 
-- **topwork-5, topwork-9**: the evals query a state schema the site does not use,
-  and the goal gives no way to derive the one it does. An override could only
-  guess.
-- **topwork-8**: the whole Messages route returns the site's in-app 404 under
-  harness state seeding, though it loads fine in an unseeded browser.
+- **topwork-5, topwork-9**: the evals read the wrong place in the site's state.
+  They query `messagesDiff.added."0".type`, but a message sent to a freelancer's
+  existing thread is recorded under `messagesDiff.updated."0"`, and no `type`
+  field exists at thread level in any state observed. topwork-9 adds a spurious
+  `differences.` prefix, where topwork evals use bare `<x>Diff` roots, and
+  indexes `[0]` into a dict keyed `"0"`. The goal names no stored value that
+  could stand in, so a corrected expected value would be invention rather than
+  repair. Their `llm_boolean` halves are unaffected.
+- **topwork-8**: under harness state seeding the entire Messages route returns
+  the site's own in-app 404, including the direct conversation URL, so the
+  message the goal asks the agent to read is unreachable. An unseeded browser
+  renders the route fine, which places the defect in seeded host behaviour rather
+  than in the task.
 
-`opendining-1` and `topwork-8` appear on this list and are nonetheless corrected
-here. Their task files carry a defective rubric on top of a broken host, and the
-two are independent: if the host is ever fixed, the corrected rubric is the one
-that should grade it.
+Everything named here still receives its corrections in this set. A broken host
+and a defective rubric are separate faults, so the fix stands whether or not you
+choose to run the site, and it is the right one the day the host is repaired.
 
 ## License
 
