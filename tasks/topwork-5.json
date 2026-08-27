@@ -15,8 +15,8 @@
     {
       "description": "message of correct type",
       "type": "jmespath",
-      "expected_value": "text",
-      "query": "messagesDiff.added.\"0\".type"
+      "expected_value": true,
+      "query": "length(messagesDiff.updated.* | [?lastMessage != ''] || `[]`) > `0` || length(messagesDiff.added.* | [?lastMessage != ''] || `[]`) > `0`"
     },
     {
       "type": "llm_boolean",

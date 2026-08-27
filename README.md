@@ -1,8 +1,8 @@
 # REAL Bench v1, corrected task set
 
 The 112 task definitions from [REAL Bench](https://github.com/agi-inc/agisdk) v1
-with 30 defective ones repaired. Drop-in replacement for the task JSONs shipped
-in `agisdk` 0.3.5; the other 82 files are byte-identical to upstream.
+with 32 defective ones repaired. Drop-in replacement for the task JSONs shipped
+in `agisdk` 0.3.5; the other 80 files are byte-identical to upstream.
 
 > **Unofficial.** Not affiliated with, endorsed by, or produced by AGI Inc. This
 > is a third-party correction set. Upstream is Apache 2.0; see `LICENSE` and
@@ -20,8 +20,8 @@ themselves:
   satisfy.** `gocalendar-7` asks for a reschedule to July 19 and expects a July
   18 timestamp. `gomail-8` says "clear all emails from GitHub", the inbox holds
   4, and the eval requires exactly 1 update. Others index `updated[0]` on a dict
-  keyed by id, or match a date string the site never stores in that form. 17
-  queries and 14 expected values rewritten.
+  keyed by id, or match a date string the site never stores in that form. 19
+  queries and 16 expected values rewritten.
 - **One goal describing a state the clone never exposes.** `dashdish-5` ends at
   "select Pickup", a pre-commit state, while all four of its evals read inside an
   order object the site only creates once an order is placed. The correction adds
@@ -56,7 +56,7 @@ the filename is the task id, and `v1.<id>` is the name `agisdk` uses.
 
 ## Verify
 
-After applying, upstream and corrected differ on exactly 30 files:
+After applying, upstream and corrected differ on exactly 32 files:
 
 ```bash
 python -c "
@@ -103,25 +103,33 @@ Three sites are unusable in full:
   price filter still filters wrongly. Treat the pin as a partial mitigation
   rather than a fix for this site.
 
-Three further tasks are individually broken, all on topwork:
+Three further tasks are individually broken, all on topwork, and all for the
+same underlying reason: under harness state seeding the entire Messages route,
+including the direct conversation URL, returns the site's own in-app 404, so a
+message the goal asks the agent to read or reply to is unreachable. An
+unseeded browser renders the route fine, which places the defect in seeded
+host behaviour rather than in the task. Independently of that, each of the
+three also carried its own defective scoring artefact, corrected in this set
+regardless of whether the route is reachable:
 
 - **topwork-5, topwork-9**: the evals read the wrong place in the site's state.
-  They query `messagesDiff.added."0".type`, but a message sent to a freelancer's
-  existing thread is recorded under `messagesDiff.updated."0"`, and no `type`
-  field exists at thread level in any state observed. topwork-9 adds a spurious
-  `differences.` prefix, where topwork evals use bare `<x>Diff` roots, and
-  indexes `[0]` into a dict keyed `"0"`. The goal names no stored value that
-  could stand in, so a corrected expected value would be invention rather than
-  repair. Their `llm_boolean` halves are unaffected.
-- **topwork-8**: under harness state seeding the entire Messages route returns
-  the site's own in-app 404, including the direct conversation URL, so the
-  message the goal asks the agent to read is unreachable. An unseeded browser
-  renders the route fine, which places the defect in seeded host behaviour rather
-  than in the task.
+  They queried `messagesDiff.added."0".type`, but a message sent to a
+  freelancer's existing thread is recorded under `messagesDiff.updated."0"`,
+  and no `type` field exists at thread level on either branch. topwork-9 also
+  had a spurious `differences.` prefix, where topwork evals use bare
+  `<x>Diff` roots, and indexed `[0]` into a dict keyed `"0"`. The goal names no
+  stored value to pin the expected value to, so both are corrected to a
+  storage-convention check derived from the goal and the site's schema alone:
+  does either branch record a non-empty `lastMessage` for the thread. Their
+  `llm_boolean` halves are unaffected.
+- **topwork-8**: the rubric named no facts (`does the answer include
+  information about the last message received?`), so any hallucinated message
+  would pass. Corrected to pin the seeded conversation's one message.
 
-Everything named here still receives its corrections in this set. A broken host
-and a defective rubric are separate faults, so the fix stands whether or not you
-choose to run the site, and it is the right one the day the host is repaired.
+Everything named here still receives its corrections in this set. A broken
+host and a defective scoring artefact are separate faults, so the fix stands
+whether or not you choose to run the site, and it is the right one the day
+the host is repaired.
 
 ## License
 

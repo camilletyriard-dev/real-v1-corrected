@@ -1,14 +1,14 @@
 # Changes against upstream
 
-30 of 112 tasks differ from `https://github.com/agi-inc/agisdk` at tag `0.3.5`. Every other task is byte-identical to upstream.
+32 of 112 tasks differ from `https://github.com/agi-inc/agisdk` at tag `0.3.5`. Every other task is byte-identical to upstream.
 
 Corrections only ever rewrite an existing field. No task, eval, or eval criterion is added, dropped, or reordered, and no `type`, `id`, `challengeType`, `website` or `points` field is touched.
 
 | field rewritten | count |
 | --- | --- |
 | `rubric` | 13 |
-| `query` | 17 |
-| `expected_value` | 14 |
+| `query` | 19 |
+| `expected_value` | 16 |
 | `goal` | 1 |
 
 ## dashdish-11
@@ -301,6 +301,20 @@ Corrections only ever rewrite an existing field. No task, eval, or eval criterio
 - before: `UI/UX Designer`
 - after: `true`
 
+## topwork-5
+
+`challengeType: retrieval-action`
+
+**evals[0].query**
+
+- before: `messagesDiff.added."0".type`
+- after: ``length(messagesDiff.updated.* | [?lastMessage != ''] || `[]`) > `0` || length(messagesDiff.added.* | [?lastMessage != ''] || `[]`) > `0` ``
+
+**evals[0].expected_value**
+
+- before: `text`
+- after: `true`
+
 ## topwork-6
 
 `challengeType: action`
@@ -318,6 +332,20 @@ Corrections only ever rewrite an existing field. No task, eval, or eval criterio
 
 - before: `Does the answer include information about the last message recieved?`
 - after: `Does the answer state that the last message received was 'Hey, how are you?' (sent by Jane Doe, 04/01/23)? Naming the sender or date is not required, but a different message content or a different sender is incorrect.`
+
+## topwork-9
+
+`challengeType: retrieval-action`
+
+**evals[0].query**
+
+- before: `differences.messagesDiff.added[0].type`
+- after: ``length(messagesDiff.updated.* | [?lastMessage != ''] || `[]`) > `0` || length(messagesDiff.added.* | [?lastMessage != ''] || `[]`) > `0` ``
+
+**evals[0].expected_value**
+
+- before: `text`
+- after: `true`
 
 ## udriver-1
 

@@ -2,7 +2,7 @@
   "upstream": "https://github.com/agi-inc/agisdk",
   "upstream_tag": "0.3.5",
   "n_tasks": 112,
-  "n_tasks_changed": 30,
+  "n_tasks_changed": 32,
   "tasks": [
     {
       "task_id": "dashdish-11",
@@ -383,6 +383,24 @@
       ]
     },
     {
+      "task_id": "topwork-5",
+      "challenge_type": "retrieval-action",
+      "changes": [
+        {
+          "field": "query",
+          "index": 0,
+          "before": "messagesDiff.added.\"0\".type",
+          "after": "length(messagesDiff.updated.* | [?lastMessage != ''] || `[]`) > `0` || length(messagesDiff.added.* | [?lastMessage != ''] || `[]`) > `0`"
+        },
+        {
+          "field": "expected_value",
+          "index": 0,
+          "before": "text",
+          "after": true
+        }
+      ]
+    },
+    {
       "task_id": "topwork-6",
       "challenge_type": "action",
       "changes": [
@@ -403,6 +421,24 @@
           "index": 0,
           "before": "Does the answer include information about the last message recieved?",
           "after": "Does the answer state that the last message received was 'Hey, how are you?' (sent by Jane Doe, 04/01/23)? Naming the sender or date is not required, but a different message content or a different sender is incorrect."
+        }
+      ]
+    },
+    {
+      "task_id": "topwork-9",
+      "challenge_type": "retrieval-action",
+      "changes": [
+        {
+          "field": "query",
+          "index": 0,
+          "before": "differences.messagesDiff.added[0].type",
+          "after": "length(messagesDiff.updated.* | [?lastMessage != ''] || `[]`) > `0` || length(messagesDiff.added.* | [?lastMessage != ''] || `[]`) > `0`"
+        },
+        {
+          "field": "expected_value",
+          "index": 0,
+          "before": "text",
+          "after": true
         }
       ]
     },

@@ -14,8 +14,8 @@
   "evals": [
     {
       "type": "jmespath",
-      "query": "differences.messagesDiff.added[0].type",
-      "expected_value": "text"
+      "query": "length(messagesDiff.updated.* | [?lastMessage != ''] || `[]`) > `0` || length(messagesDiff.added.* | [?lastMessage != ''] || `[]`) > `0`",
+      "expected_value": true
     },
     {
       "type": "llm_boolean",
